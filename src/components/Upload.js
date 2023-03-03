@@ -1,14 +1,26 @@
 import { FiUpload } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Upload() {
   const [image, setImage] = useState();
 
+  useEffect(() => {
+    setImage(window.localStorage.getItem("image"));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("image", image);
+  }, [image]);
+
   function imageOnChange() {
     const fileBtn = document.getElementById("file");
     if (fileBtn.files.length) {
-      setImage(fileBtn.files[fileBtn.files.length - 1]);
+      var reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(fileBtn.files[fileBtn.files.length - 1]);
     }
   }
 
@@ -17,31 +29,12 @@ function Upload() {
     fileBtn.click();
   }
 
-  function imageRead() {
-    if (image) {
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        var displayImage = document.createElement("img");
-        displayImage.src = e.target.result;
-        var current = document.getElementById("image");
-        if (current) {
-          current.remove();
-        }
-        displayImage.id = "image";
-        displayImage.style["maxWidth"] = "100%";
-        displayImage.style["maxHeight"] = "100%";
-        document.getElementById("upload").appendChild(displayImage);
-      };
-      reader.readAsDataURL(image);
-    }
-  }
-
   return (
     <div className="w-2/5 text-end">
       <input
         type="file"
         id="file"
-        accept="image/*"
+        accept="image/png, image/jpeg"
         onChange={imageOnChange}
         hidden="hidden"
       ></input>
@@ -59,7 +52,11 @@ function Upload() {
         onClick={imageUpload}
       >
         {image ? (
-          imageRead()
+          <img
+            alt="uploaded"
+            src={image}
+            className="max-h-[100%] max-w-[100%]"
+          ></img>
         ) : (
           <>
             <IconContext.Provider
