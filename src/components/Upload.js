@@ -37,7 +37,7 @@ function Upload() {
   }
 
   return (
-    <div className="w-1/2 text-center">
+    <div className="w-2/5 text-end">
       <input
         type="file"
         id="file"
@@ -50,7 +50,7 @@ function Upload() {
         id="upload"
         className="
         rounded-xl
-        shadow-[0_0_20px_rgba(0,0,0,0.3)]
+        shadow-[0_0_20px_rgba(0,0,0,0.1)]
         text-[rgba(0,0,0,0.5)]
         h-[24em]
         w-[24em]
