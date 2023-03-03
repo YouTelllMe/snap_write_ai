@@ -9,7 +9,9 @@ function TextArea(props) {
   }
 
   useEffect(() => {
-    const prev = window.localStorage.getItem("text" + props.id) || "";
+    const prev =
+      window.localStorage.getItem("text" + props.id) ||
+      "A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic.\n\nA paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing\n\nA paragraph is a series of sentences that are organized";
     setText(prev);
   }, []);
 
